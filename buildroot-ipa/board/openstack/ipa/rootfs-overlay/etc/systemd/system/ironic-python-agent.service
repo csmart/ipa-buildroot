@@ -1,0 +1,21 @@
+[Unit]
+Description=Ironic Python Agent
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+# The gate can be slow, increase default timeout
+TimeoutStartSec=infinity
+# Always restart if this fails (except manually stopped)
+Restart=always
+# Make sure we have ironic-python-agent executable
+ExecStartPre=/usr/bin/python -m wheel install-scripts ironic-python-agent
+# Gate debugging
+ExecStartPre=/usr/bin/bash -c "ip addr"
+ExecStartPre=/usr/bin/bash -c "lsmod"
+ExecStartPre=/usr/bin/bash -c "lspci"
+# Start ironic-python-agent
+ExecStart=/usr/bin/ironic-python-agent
+
+[Install]
+WantedBy=multi-user.target

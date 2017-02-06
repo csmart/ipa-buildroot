@@ -1,0 +1,6 @@
+## Overlay
+
+The contents of this overlay directory (excluding this .empty file) will be automatically copied into the final image.
+
+It allows users to modify anything on the target system at build time.
+

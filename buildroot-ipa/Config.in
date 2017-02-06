@@ -1,0 +1,41 @@
+# For configuration, see:
+# https://buildroot.org/downloads/manual/manual.html#outside-br-custom
+#menu "External python modules"
+#	source "$BR2_EXTERNAL_IPA_PATH/package/python-appdirs/Config.in"
+#	source "$BR2_EXTERNAL_IPA_PATH/package/python-babel/Config.in"
+#	source "$BR2_EXTERNAL_IPA_PATH/package/python-pytz/Config.in"
+#endmenu
+
+config OPENSTACK_IPA_GIT_URL
+	string "Ironic Python Agent Git URL"
+	help
+	  The URL to Git repository for Ironic Python Agent.
+	  Specify this if you want to point to a local repo,
+	  rather than upstream.
+	default "https://git.openstack.org/openstack/ironic-python-agent"
+
+config OPENSTACK_IPA_RELEASE
+	string "Git release of Ironic Python Agent"
+	help
+	  The Git commit/branch/tag of Ironic Python Agent
+	  to use from the repo specified at OPENSTACK_IPA_GIT_URL
+	default "master"
+
+config OPENSTACK_REQUIREMENTS_GIT_URL
+	string "OpenStack Requirements Git URL"
+	help
+	  The URL to Git repository for OpenStack Requirements.
+	  This is used for the upper-constraints.txt file when
+	  compiling PIP packages for Ironic Python Agent.
+	  
+	  Specify this if you want to point to a local repo,
+	  rather than upstream.
+	default "https://git.openstack.org/openstack/requirements"
+
+config OPENSTACK_REQUIREMENTS_RELEASE
+	string "Git release of OpenStack Requirements"
+	help
+	  The Git commit/branch/tag of OpenStack Requirements
+	  to use from the repo specified at OPENSTACK_REQUIREMENTS_GIT_URL
+	default "master"
+
