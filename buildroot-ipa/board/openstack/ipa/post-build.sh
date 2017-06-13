@@ -112,7 +112,6 @@ export LDFLAGS=""
 
 # Build ironic-python-agent dependency wheels
 "${HOST_DIR}/usr/bin/pip" wheel \
---no-binary :all: \
 --src "${PIP_DL_DIR}/src/" \
 --build "${PIP_DL_DIR}/build/" \
 --wheel-dir "${PIP_WHEELHOUSE}" \
@@ -132,7 +131,6 @@ export LDFLAGS=""
 
 # Install ironic-python-agent from our compiled wheels
 "${HOST_DIR}/usr/bin/pip" install \
---only-binary :all: \
 --no-compile \
 --upgrade \
 --force-reinstall \
@@ -144,7 +142,6 @@ ironic-python-agent
 
 # Compile wheels for pip, setuptools and wheel for target
 "${HOST_DIR}/usr/bin/pip" wheel \
---no-binary :all: \
 --src "${PIP_DL_DIR}/src/" \
 --build "${PIP_DL_DIR}/build/" \
 --wheel-dir "${PIP_WHEELHOUSE}" \
@@ -152,7 +149,6 @@ pip setuptools wheel
 
 # Install pip, setuptools and wheel for target to generate ironic-python-agent executable on boot
 "${HOST_DIR}/usr/bin/pip" install \
---only-binary :all: \
 --no-compile \
 --upgrade \
 --no-index \
