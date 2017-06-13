@@ -55,6 +55,14 @@ wget https://bootstrap.pypa.io/get-pip.py -O "${PIP_DL_DIR}/get-pip.py"
 rm -Rf "${OPENSTACK_IPA_GIT_DIR}"
 git clone --depth 1 ${OPENSTACK_IPA_RELEASE:+--branch ${OPENSTACK_IPA_RELEASE}} "${OPENSTACK_IPA_GIT_URL}" "${OPENSTACK_IPA_GIT_DIR}"
 
+if [ "${OPENSTACK_IPA_RELEASE}" == "stable/newton" ]
+then
+    pushd "${OPENSTACK_IPA_GIT_DIR}"
+    wget http://www.stillhq.com/openstack/patches/newton/ironic-python-agent-ssl-options
+    patch -p 1 < ironic-python-agent-ssl-options
+    popd
+fi
+
 # Git clone Requirements to get specified upper-constraints.txt
 rm -Rf "${OPENSTACK_REQUIREMENTS_GIT_DIR}"
 git clone --depth 1 ${OPENSTACK_REQUIREMENTS_RELEASE:+--branch ${OPENSTACK_REQUIREMENTS_RELEASE}} "${OPENSTACK_REQUIREMENTS_GIT_URL}" "${OPENSTACK_REQUIREMENTS_GIT_DIR}"
@@ -112,7 +120,6 @@ export LDFLAGS=""
 
 # Build ironic-python-agent dependency wheels
 "${HOST_DIR}/usr/bin/pip" wheel \
---no-binary :all: \
 --src "${PIP_DL_DIR}/src/" \
 --build "${PIP_DL_DIR}/build/" \
 --wheel-dir "${PIP_WHEELHOUSE}" \
@@ -132,7 +139,6 @@ export LDFLAGS=""
 
 # Install ironic-python-agent from our compiled wheels
 "${HOST_DIR}/usr/bin/pip" install \
---only-binary :all: \
 --no-compile \
 --upgrade \
 --force-reinstall \
@@ -144,7 +150,6 @@ ironic-python-agent
 
 # Compile wheels for pip, setuptools and wheel for target
 "${HOST_DIR}/usr/bin/pip" wheel \
---no-binary :all: \
 --src "${PIP_DL_DIR}/src/" \
 --build "${PIP_DL_DIR}/build/" \
 --wheel-dir "${PIP_WHEELHOUSE}" \
@@ -152,7 +157,6 @@ pip setuptools wheel
 
 # Install pip, setuptools and wheel for target to generate ironic-python-agent executable on boot
 "${HOST_DIR}/usr/bin/pip" install \
---only-binary :all: \
 --no-compile \
 --upgrade \
 --no-index \
